@@ -21,6 +21,13 @@ function cargarEventListeners() {
     carrito.addEventListener('click', eliminarCurso);
 
 
+    // muestra los cursos del localstorage
+    document.addEventListener('DOMContentLoaded', () => {
+        articulosCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        carritoHTML()
+    })
+
+
     vaciarCarritoBtn.addEventListener('click', () => {
         limpiarHTML();
         articulosCarrito = [];
@@ -84,8 +91,11 @@ function leerDatosCurso(cursoSeleccionado) {
         articulosCarrito = [...articulosCarrito, infoCurso]
     }
     // Agrega el objeto de infoCurso al array de articulos del carrito
-    carritoHTML()
-    console.log(articulosCarrito);
+    carritoHTML();
+
+
+
+    
 };
 
 
@@ -126,8 +136,22 @@ function carritoHTML() {
         `;
         //agrega el html en el tboddy
         contenedorCarrito.appendChild(row);
+
+
+        // sincronizar storage
+        sincronizarStorage();
+
     })
 }
+
+
+
+// funcion que guarda en el storage
+function sincronizarStorage() {
+    localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
+}
+
+
 
 
 
